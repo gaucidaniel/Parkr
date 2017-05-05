@@ -2,6 +2,7 @@ package com.danielgauci.parkr.ui.parkingareadetails
 
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -38,10 +39,14 @@ class DayPredictionsFragment : Fragment(), DayPredictionsMvpView {
             mParkingSpace = arguments.getString(ARG_PARKING_SPACE_ID)
             mDay = arguments.getString(ARG_DAY)
 
+            // Get current role
+            val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
+            val role = prefs.getString("role", "student")
+
             // Setup Presenter
             val presenter = DayPredictionsPresenter()
             presenter.attachView(this)
-            presenter.getPredictions(mParkingSpace!!, "student", mDay!!)
+            presenter.getPredictions(mParkingSpace!!, role, mDay!!)
         } else {
             throw Exception("${this.javaClass.name} started without parameters")
         }

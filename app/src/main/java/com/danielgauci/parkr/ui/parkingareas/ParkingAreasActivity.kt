@@ -3,7 +3,10 @@ package com.danielgauci.parkr.ui.parkingareas
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
 import com.danielgauci.parkr.R
 import com.danielgauci.parkr.data.model.ParkingArea
 import kotlinx.android.synthetic.main.activity_parking_areas.*
@@ -17,6 +20,11 @@ class ParkingAreasActivity : AppCompatActivity(), ParkingAreasMvpView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_parking_areas)
+
+        // Setup toolbar items
+        parkingAreaRoleButton.setOnClickListener {
+            showRoleDialog()
+        }
 
         // Setup recycler view
         mAdapter = ParkingAreasAdapter(this)
@@ -38,6 +46,25 @@ class ParkingAreasActivity : AppCompatActivity(), ParkingAreasMvpView {
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    private fun showRoleDialog(){
+        val roles = mutableListOf("student", "lecturer", "admin")
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val index = roles.indexOf(preferences.getString("role", "student"))
+        MaterialDialog.Builder(this)
+                .title("Role")
+                .items(roles.map { it.capitalize() })
+                .itemsCallbackSingleChoice(index, { dialog, itemView, which, text ->
+                    // Save role to shared preferences
+                    val editor = preferences.edit()
+                    editor.putString("role", text.toString().toLowerCase())
+                    editor.apply()
+
+                    true
+                })
+                .build()
+                .show()
     }
 
     override fun showParkingAreas(areas: List<ParkingArea>) {
