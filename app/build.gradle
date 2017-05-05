@@ -59,7 +59,7 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.afollestad.material-dialogs:core:0.9.4.4'
-
+    compile 'com.pnikosis:materialish-progress:1.7'
 }
 repositories {
     mavenCentral()

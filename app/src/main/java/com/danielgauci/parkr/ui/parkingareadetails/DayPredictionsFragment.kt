@@ -100,6 +100,8 @@ class DayPredictionsFragment : Fragment(), DayPredictionsMvpView {
     }
 
     override fun showProgressWheel(show: Boolean) {
-
+        if (dayPredictionsProgressWheel != null ) {
+            dayPredictionsProgressWheel.visibility = if (show) View.VISIBLE else View.GONE
+        }
     }
 }

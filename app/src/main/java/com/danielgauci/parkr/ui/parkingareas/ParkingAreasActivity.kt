@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.afollestad.materialdialogs.MaterialDialog
 import com.danielgauci.parkr.R
 import com.danielgauci.parkr.data.model.ParkingArea
@@ -71,8 +72,10 @@ class ParkingAreasActivity : AppCompatActivity(), ParkingAreasMvpView {
         mAdapter.setAreas(areas = areas)
     }
 
-    override fun showProgressWheel(boolean: Boolean) {
-
+    override fun showProgressWheel(show: Boolean) {
+        if (parkingAreasProgressWheel != null ) {
+            parkingAreasProgressWheel.visibility = if (show) View.VISIBLE else View.GONE
+        }
     }
 
     override fun showError(error: String) {
