@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.afollestad.materialdialogs.MaterialDialog
 
 import com.danielgauci.parkr.R
 import kotlinx.android.synthetic.main.fragment_day_predictions.*
@@ -92,7 +93,13 @@ class DayPredictionsFragment : Fragment(), DayPredictionsMvpView {
     }
 
     override fun showError(error: String) {
-
+        MaterialDialog.Builder(context)
+                .title("Error")
+                .content(error)
+                .positiveText("Continue")
+                .positiveColor(R.color.colorAccent)
+                .build()
+                .show()
     }
 
     override fun hideError() {

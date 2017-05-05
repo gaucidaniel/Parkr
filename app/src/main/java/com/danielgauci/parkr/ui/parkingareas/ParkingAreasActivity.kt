@@ -79,7 +79,13 @@ class ParkingAreasActivity : AppCompatActivity(), ParkingAreasMvpView {
     }
 
     override fun showError(error: String) {
-
+        MaterialDialog.Builder(this)
+                .title("Error")
+                .content(error)
+                .positiveText("Continue")
+                .positiveColor(R.color.colorAccent)
+                .build()
+                .show()
     }
 
     override fun hideError() {
